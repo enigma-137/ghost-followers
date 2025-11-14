@@ -392,7 +392,7 @@ export default function GhostFollowersInsight() {
         )}
 
        
-        {!results && !loading && (
+        {/* {!results && !loading && (
           <Card className="max-w-2xl mx-auto">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -405,17 +405,10 @@ export default function GhostFollowersInsight() {
                 <strong>Statistical Analysis:</strong> Uses industry-standard metrics and follower count 
                 to estimate ghost followers without fetching individual follower data.
               </p>
-              <p>
-                <strong>Efficient:</strong> Only requires 1 API call instead of hundreds, staying well 
-                within free tier limits.
-              </p>
-              <p>
-                <strong>Accurate:</strong> Based on research showing 15-35% of followers are typically 
-                inactive or ghost accounts, with higher rates for larger accounts.
-              </p>
+            
             </CardContent>
           </Card>
-        )}
+        )} */}
       </div>
     </div>
   )
