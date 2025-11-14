@@ -6,11 +6,9 @@ import {
   Search,
   Users,
   Activity,
-  Ghost,
   AlertCircle,
   Loader2,
   TrendingDown,
-  Zap,
   Info,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"

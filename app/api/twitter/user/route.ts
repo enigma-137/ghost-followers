@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
     const url = `https://api.twitterapi.io/twitter/user/info?userName=${username}`
     console.log(`[API] Request URL: ${url}`)
 
-    // Retry logic with exponential backoff
+  
     let response;
     let lastError;
     const maxRetries = 3;
@@ -41,13 +41,13 @@ export async function GET(request: NextRequest) {
             'X-API-Key': apiKey,
             'Content-Type': 'application/json',
           },
-          signal: AbortSignal.timeout(30000), // 30 second timeout
+          signal: AbortSignal.timeout(30000), 
         })
         break; // Success, exit retry loop
       } catch (error: any) {
         lastError = error;
         if (attempt < maxRetries - 1) {
-          const delay = baseDelay * Math.pow(2, attempt); // Exponential backoff
+          const delay = baseDelay * Math.pow(2, attempt);
           console.log(`[API] Attempt ${attempt + 1} failed, retrying in ${delay}ms:`, error.message)
           await new Promise(resolve => setTimeout(resolve, delay));
         }
