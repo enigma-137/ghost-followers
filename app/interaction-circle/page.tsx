@@ -153,10 +153,10 @@ export default function InteractionCircle() {
               Copy Link
             </Button>
             <Button onClick={handleTwitterShare} variant="outline">
-              Share on Twitter
+              Twitter
             </Button>
             <Button asChild variant="outline">
-              <a href="/">Ghost Followers</a>
+              <a href="/">Ghost</a>
             </Button>
             <Button onClick={handleReset} variant="secondary">
               Try Another
