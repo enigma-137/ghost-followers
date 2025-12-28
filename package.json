@@ -1,5 +1,5 @@
 {
-  "name": "valentine-app",
+  "name": "twitter-app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -16,7 +16,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.474.0",
-    "next": "15.1.6",
+    "next": "^16.1.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "rechart": "^0.0.1",

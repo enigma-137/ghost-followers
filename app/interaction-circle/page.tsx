@@ -11,8 +11,7 @@ export default function InteractionCircle() {
   const [loading, setLoading] = useState(false)
   const [showResults, setShowResults] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleSubmit = async () => {
     if (!username) return
 
     setLoading(true)
@@ -38,7 +37,6 @@ export default function InteractionCircle() {
       const followerIds = new Set(followersData.followers?.map((u: any) => u.id) || followersData.data?.map((u: any) => u.id))
       const mutualsList = (followingsData.followings || followingsData.data)?.filter((user: any) => followerIds.has(user.id)) || []
 
-
       const sortedMutuals = mutualsList
         .sort((a: any, b: any) => (b.followers_count || b.followers || 0) - (a.followers_count || a.followers || 0))
         .slice(0, 100)
@@ -51,34 +49,6 @@ export default function InteractionCircle() {
     } finally {
       setLoading(false)
     }
-  }
-
-  // Function to distribute users across concentric circles
-  const getCirclePosition = (index: number, total: number) => {
-    const circles = [
-      { radius: 80, maxUsers: 8 },   // Inner circle
-      { radius: 130, maxUsers: 16 }, // Middle circle  
-      { radius: 180, maxUsers: 32 }  // Outer circle
-    ]
-    
-    let userIndex = index
-    for (const circle of circles) {
-      if (userIndex < circle.maxUsers) {
-        const angle = (userIndex / circle.maxUsers) * 2 * Math.PI - Math.PI / 2
-        const centerX = 250
-        const centerY = 250
-        const x = Math.cos(angle) * circle.radius + centerX
-        const y = Math.sin(angle) * circle.radius + centerY
-        return { x: x - 24, y: y - 24 }
-      }
-      userIndex -= circle.maxUsers
-    }
-    
-    
-    const angle = (userIndex / 32) * 2 * Math.PI - Math.PI / 2
-    const x = Math.cos(angle) * 180 + 250
-    const y = Math.sin(angle) * 180 + 250
-    return { x: x - 24, y: y - 24 }
   }
 
   const handleShare = () => {
@@ -101,69 +71,73 @@ export default function InteractionCircle() {
     setMutuals([])
   }
 
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleSubmit()
+    }
+  }
+
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6 text-center">Twitter Interaction Circle</h1>
+    <div className="min-h-screen p-4" style={{ backgroundColor: '#E9D5FF' }}>
+      <div className="container mx-auto">
+        <h1 className="text-3xl font-bold mb-6 text-center">Twitter Interaction Circle</h1>
 
-      {!showResults ? (
-        <form onSubmit={handleSubmit} className="max-w-md mx-auto">
-          <div className="mb-4">
-            <Input
-              type="text"
-              placeholder="Enter Twitter username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="w-full"
-            />
-          </div>
-          <Button type="submit" disabled={loading} className="w-full">
-            {loading ? 'Loading...' : 'Generate Circle'}
-          </Button>
-        </form>
-      ) : (
-        <div className="text-center">
-          <h2 className="text-2xl font-semibold mb-4">Your 2025 Top Mutuals</h2>
-          <div className="relative mx-auto mb-6" style={{ width: '500px', height: '500px' }}>
-            {user && (
-              <img
-                src={user.profilePicture}
-                alt={user.userName || user.name}
-                className="absolute w-16 h-16 rounded-full border-4 border-blue-500"
-                style={{ left: 250 - 32, top: 250 - 32 }}
+        {!showResults ? (
+          <div className="max-w-md mx-auto">
+            <div className="mb-4">
+              <Input
+                type="text"
+                placeholder="Enter Twitter username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                onKeyPress={handleKeyPress}
+                className="w-full"
               />
-            )}
-
-            {mutuals.map((mutual: any, index: number) => {
-              const position = getCirclePosition(index, mutuals.length)
-
-              return (
-                <img
-                  key={mutual.id}
-                  src={mutual.profilePicture || mutual.profile_image_url_https || mutual.profile_image_url}
-                  alt={mutual.userName || mutual.name || mutual.screen_name || mutual.username}
-                  className="absolute w-12 h-12 rounded-full border-2 border-white shadow-lg"
-                  style={{ left: position.x, top: position.y }}
-                  title={`${mutual.userName || mutual.name || mutual.screen_name || mutual.username} (${(mutual.followers_count || mutual.followers || 0).toLocaleString()} followers)`}
-                />
-              )
-            })}
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 justify-center max-w-md mx-auto">
-            <Button onClick={handleShare} variant="outline">
-              Copy Link
-            </Button>
-            <Button onClick={handleTwitterShare} variant="outline">
-              Twitter
-            </Button>
-            <Button asChild variant="outline">
-              <a href="/">Ghost</a>
-            </Button>
-            <Button onClick={handleReset} variant="secondary">
-              Try Another
+            </div>
+            <Button onClick={handleSubmit} disabled={loading} className="w-full">
+              {loading ? 'Loading...' : 'Generate Circle'}
             </Button>
           </div>
-        </div>
-      )}
+        ) : (
+          <div className="text-center">
+            <h2 className="text-2xl font-semibold mb-6">Your 2025 Top Mutuals</h2>
+            
+            {/* Grid Layout */}
+            <div className="max-w-4xl mx-auto mb-6">
+              <div className="grid grid-cols-7 gap-3 justify-items-center">
+                {mutuals.map((mutual: any, index: number) => (
+                  <div
+                    key={mutual.id}
+                    className="w-20 h-20 rounded-full border-4 border-black overflow-hidden shadow-lg hover:scale-110 transition-transform"
+                    title={`${mutual.userName || mutual.name || mutual.screen_name || mutual.username} (${(mutual.followers_count || mutual.followers || 0).toLocaleString()} followers)`}
+                  >
+                    <img
+                      src={mutual.profilePicture || mutual.profile_image_url_https || mutual.profile_image_url}
+                      alt={mutual.userName || mutual.name || mutual.screen_name || mutual.username}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 justify-center max-w-md mx-auto">
+              <Button onClick={handleShare} variant="outline">
+                Copy Link
+              </Button>
+              <Button onClick={handleTwitterShare} variant="outline">
+                Twitter
+              </Button>
+              <Button asChild variant="outline">
+                <a href="/">Ghost</a>
+              </Button>
+              <Button onClick={handleReset} variant="secondary">
+                Try Another
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   )
 }

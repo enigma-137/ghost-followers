@@ -21,10 +21,10 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    console.log(`[API] Fetching followers for username: ${username}`)
+    // console.log(`[API] Fetching followers for username: ${username}`)
 
     const url = `https://api.twitterapi.io/twitter/user/followers?userName=${username}&pageSize=200`
-    console.log(`[API] Request URL: ${url}`)
+    // console.log(`[API] Request URL: ${url}`)
 
     const response = await fetch(url, {
       method: 'GET',
@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
 
     const data = await response.json()
     
-    console.log(`[API] TwitterAPI.io followers response status: ${response.status}`)
+    // console.log(`[API] TwitterAPI.io followers response status: ${response.status}`)
 
     if (!response.ok) {
       console.error('[API] Error from TwitterAPI.io:', data)
