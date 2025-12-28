@@ -21,9 +21,9 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    console.log(`[API] Fetching followers for username: ${username}`)
+    console.log(`[API] Fetching followings for username: ${username}`)
 
-    const url = `https://api.twitterapi.io/twitter/user/followers?userName=${username}&pageSize=200`
+    const url = `https://api.twitterapi.io/twitter/user/followings?userName=${username}&pageSize=200`
     console.log(`[API] Request URL: ${url}`)
 
     const response = await fetch(url, {
@@ -36,25 +36,25 @@ export async function GET(request: NextRequest) {
     })
 
     const data = await response.json()
-    
-    console.log(`[API] TwitterAPI.io followers response status: ${response.status}`)
+
+    console.log(`[API] TwitterAPI.io followings response status: ${response.status}`)
 
     if (!response.ok) {
       console.error('[API] Error from TwitterAPI.io:', data)
-      
+
       if (response.status === 429) {
         return NextResponse.json(
-          { 
+          {
             error: 'Rate limit exceeded. Free tier: 100 requests/day',
-            retryAfter: 60 
+            retryAfter: 60
           },
           { status: 429 }
         )
       }
 
       return NextResponse.json(
-        { 
-          error: data.msg || data.message || 'Failed to fetch followers',
+        {
+          error: data.msg || data.message || 'Failed to fetch followings',
           details: data
         },
         { status: response.status }
