@@ -148,12 +148,15 @@ export default function InteractionCircle() {
               )
             })}
           </div>
-          <div className="flex gap-4 justify-center">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 justify-center max-w-md mx-auto">
             <Button onClick={handleShare} variant="outline">
               Copy Link
             </Button>
             <Button onClick={handleTwitterShare} variant="outline">
               Share on Twitter
+            </Button>
+            <Button asChild variant="outline">
+              <a href="/">Ghost Followers</a>
             </Button>
             <Button onClick={handleReset} variant="secondary">
               Try Another
