@@ -104,11 +104,11 @@ export default function InteractionCircle() {
             
             {/* Grid Layout */}
             <div className="max-w-4xl mx-auto mb-6">
-              <div className="grid grid-cols-7 gap-3 justify-items-center">
+              <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-7 lg:grid-cols-8 gap-2 sm:gap-3 justify-items-center">
                 {mutuals.map((mutual: any, index: number) => (
                   <div
                     key={mutual.id}
-                    className="w-20 h-20 rounded-full border-4 border-black overflow-hidden shadow-lg hover:scale-110 transition-transform"
+                    className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 sm:border-4 border-black overflow-hidden shadow-lg hover:scale-110 transition-transform"
                     title={`${mutual.userName || mutual.name || mutual.screen_name || mutual.username} (${(mutual.followers_count || mutual.followers || 0).toLocaleString()} followers)`}
                   >
                     <img
