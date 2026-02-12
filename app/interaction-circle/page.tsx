@@ -100,7 +100,7 @@ export default function InteractionCircle() {
           </div>
         ) : (
           <div className="text-center">
-            <h2 className="text-2xl font-semibold mb-6">Your 2025 Top Mutuals</h2>
+            <h2 className="text-2xl font-semibold mb-6">Your {new Date().getFullYear()} Top Mutuals</h2>
             
             {/* Grid Layout */}
             <div className="max-w-4xl mx-auto mb-6">
