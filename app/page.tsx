@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import Link from "next/link"
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts"
 import {
   Search,
@@ -10,6 +11,7 @@ import {
   Loader2,
   TrendingDown,
   Info,
+  Zap,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -410,6 +412,17 @@ export default function GhostFollowersInsight() {
           </Card>
         )} */}
       </div>
+
+      {/* Floating Button for Interaction Circle */}
+      <Link href="/interaction-circle">
+        <Button
+          size="lg"
+          className="fixed bottom-8 right-8 rounded-full h-14 w-14 p-0 shadow-lg hover:shadow-xl transition-shadow"
+          title="Try Interaction Circle"
+        >
+          <Zap className="w-6 h-6" />
+        </Button>
+      </Link>
     </div>
   )
 }
